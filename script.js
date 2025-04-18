@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Xáo trộn mảng pieces trước khi phân phối
         shuffleArray(pieces);
 
+
         pieces.forEach((piece, index) => {
             // Tính toán vị trí ngẫu nhiên bên trong vùng chứa bên
             // Đảm bảo không đặt mảnh tràn ra ngoài vùng padding

@@ -219,58 +219,95 @@ a:hover { color: var(--button-bg-color); }
     pointer-events: none; /* Ngăn tương tác */
 }
 
-/* --- RESPONSIVE CHO MÀN HÌNH NHỎ --- */
-@media (max-width: 768px) {
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) { /* Hoặc 800px nếu bạn muốn áp dụng sớm hơn */
+
+  /* -- Thay đổi kích thước lưới linh hoạt -- */
+  :root { /* Đặt trong :root bên trong media query hoặc trực tiếp cho #puzzle-grid */
+      /* Lưới chiếm 90% chiều rộng màn hình, nhưng không lớn hơn 400px */
+      --grid-width: 90vw;
+      /* Chiều cao tự tính lại dựa trên grid-width mới */
+      /* --grid-height: calc(var(--grid-width) / var(--n-cols) * var(--n-rows)); */
+      /* --piece-size: calc(var(--grid-width) / var(--n-cols)); */
+      /* Lưu ý: JS cũng cần biết về sự thay đổi này nếu nó set style inline */
+  }
+
+  #puzzle-grid {
+      /* Áp dụng kích thước mới (quan trọng nếu bạn đặt biến trong :root) */
+      width: var(--grid-width);
+      height: var(--grid-height); /* Chiều cao sẽ tự tính theo biến CSS */
+      max-width: 400px; /* Giới hạn kích thước tối đa của lưới */
+      margin-left: auto; /* Căn giữa nếu width < 100% */
+      margin-right: auto;
+      order: 0; /* Lưới ở trên */
+      margin-bottom: 15px; /* Khoảng cách với vùng mảnh bên dưới */
+  }
+  /* ------------------------------------------ */
+
   .game-area {
-    flex-direction: column; /* Xếp dọc: vùng mảnh trên, lưới giữa, vùng mảnh dưới */
-    align-items: center; /* Căn giữa */
-    max-width: 95%;
-    gap: 15px; /* Giảm khoảng cách */
+    flex-direction: column;
+    align-items: center; /* Căn giữa các thành phần con (lưới, vùng mảnh) */
+    max-width: 100%; /* Chiếm toàn bộ chiều rộng container */
+    gap: 15px; /* Giảm khoảng cách dọc */
+    padding: 0 5px; /* Thêm chút padding ngang nếu cần */
+    box-sizing: border-box;
   }
 
-  /* Cả hai vùng mảnh sẽ có style giống nhau trên mobile */
-  .pieces-container.side-container {
-    width: 90%; /* Rộng hơn */
-    max-width: calc(var(--grid-size) + 50px); /* Giới hạn chiều rộng */
-    height: 150px; /* Chiều cao cố định nhỏ hơn */
-    order: 1; /* Đẩy cả hai vùng mảnh xuống dưới lưới (nếu muốn) */
-    /* Hoặc để mặc định, vùng trái ở trên, vùng phải ở dưới */
-    display: flex; /* Sắp xếp các mảnh bên trong */
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: flex-start; /* Căn mảnh lên đầu khi wrap */
-    gap: 5px; /* Khoảng cách giữa các mảnh bên trong */
+  /* -- Chỉ hiển thị MỘT vùng chứa mảnh -- */
+  #pieces-container-right {
+      display: none; /* Ẩn vùng bên phải */
   }
 
-   /* Bỏ position absolute cho mảnh trong vùng hỗn loạn trên mobile */
-   .pieces-container.side-container .puzzle-piece {
-        position: static !important; /* Bỏ absolute */
-        transform: none !important; /* Bỏ xoay */
-        margin: 0; /* Reset margin nếu có */
-        flex-shrink: 0; /* Ngăn mảnh bị co lại */
-   }
+  #pieces-container-left.pieces-container.side-container {
+      /* Đổi tên class hoặc chỉ cần target ID nếu đã bỏ side-container */
+      order: 1; /* Đặt dưới lưới */
+      width: 100%; /* Chiếm gần hết chiều rộng */
+      max-width: calc(var(--grid-width) + 30px); /* Rộng bằng lưới + viền nếu muốn */
+      /* Chiều cao linh hoạt hơn */
+      min-height: 100px; /* Chiều cao tối thiểu */
+      max-height: 25vh; /* Chiều cao tối đa là 25% chiều cao màn hình */
+      height: auto; /* Bỏ chiều cao cố định */
 
-   #puzzle-grid {
-       order: 0; /* Đảm bảo lưới ở giữa nếu vùng mảnh có order 1 */
-       margin-bottom: 0; /* Reset margin */
-   }
+      /* Giữ lại các style flexbox để xếp mảnh */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Căn giữa các mảnh */
+      align-content: flex-start; /* Các hàng mảnh bắt đầu từ trên */
+      gap: 5px; /* Khoảng cách giữa các mảnh */
+      overflow-y: auto; /* Vẫn cho phép cuộn nếu quá nhiều mảnh */
+      padding: 10px;
+      /* Có thể thêm border nhẹ để dễ nhìn */
+      /* border: 1px solid #ddd; */
+      background-color: rgba(255, 255, 255, 0.3); /* Nền mờ nhẹ */
+      border-radius: 5px;
+  }
+  /* --------------------------------------- */
 
-   /* Tùy chỉnh vùng bên phải nếu muốn nó ở dưới cùng */
-   #pieces-container-right.side-container {
-      /* Có thể thêm style riêng nếu cần */
+   /* Đảm bảo các mảnh trong container mobile không bị position absolute */
+   #pieces-container-left .puzzle-piece {
+        position: static !important;
+        transform: none !important;
+        margin: 0; /* Reset margin */
+        flex-shrink: 0;
+        /* Có thể giảm kích thước mảnh một chút trên mobile nếu cần, nhưng sẽ phức tạp */
+        /* width: calc(var(--piece-size) * 0.9); */
+        /* height: calc(var(--piece-size) * 0.9); */
    }
-
-   /* Có thể ẩn 1 trong 2 vùng trên mobile nếu quá chật */
-   /* #pieces-container-right { display: none; } */
 }
 
-/* Thêm CSS cho màn hình rất nhỏ nếu cần */
+/* Có thể thêm breakpoint nhỏ hơn nếu cần tinh chỉnh thêm */
 @media (max-width: 480px) {
-    /* Giảm kích thước lưới và mảnh ghép */
     :root {
-        --grid-size: 300px; /* Ví dụ: giảm kích thước lưới */
+        /* Có thể giảm max-width của lưới hơn nữa */
+        /* --grid-width: 90vw; */
+        /* max-width: 340px; */ /* Ghi đè max-width cho màn hình rất nhỏ */
     }
-     .pieces-container.side-container {
-         height: 120px; /* Giảm chiều cao vùng mảnh */
+     #puzzle-grid {
+         max-width: 320px; /* Ví dụ: giảm max-width */
      }
+
+    #pieces-container-left.pieces-container.side-container {
+        max-height: 20vh; /* Giảm chiều cao tối đa vùng mảnh */
+        min-height: 80px;
+    }
 }
