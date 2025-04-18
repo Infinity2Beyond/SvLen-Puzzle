@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVLEN Puzzle</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400&display=swap" rel="stylesheet">
+     <!-- Open Graph Meta Tags -->
+     <meta property="og:type" content="website">
+     <meta property="og:title" content="SVLEN Puzzle">
+     <meta property="og:description" content="Ấn vào đây nè....">
+     <meta property="og:image" content="./image/DHTT.jpg">
+</head>
+<body>
+    <div class="container">
+        <form class="form">
+            <input class="form__field" type="text" placeholder="Tên bạn là gì">
+        </form>
+        <p class="game-instructions">Gắp và thả các mảnh ghép...<br>Bạn biết trò này chơi như nào mà!</p>
+
+        <div class="game-area">
+            <!-- Vùng chứa mảnh ghép bên TRÁI -->
+            <div id="pieces-container-left" class="pieces-container side-container">
+                <!-- Các mảnh ghép sẽ được tạo bởi JavaScript -->
+            </div>
+
+            <!-- Vùng chứa cho lưới các ô trống (drop zones) -->
+            <div id="puzzle-grid" class="puzzle-grid">
+                <!-- Các ô trống sẽ được tạo bởi JavaScript -->
+            </div>
+
+            <!-- Vùng chứa mảnh ghép bên PHẢI -->
+            <div id="pieces-container-right" class="pieces-container side-container">
+                <!-- Các mảnh ghép sẽ được tạo bởi JavaScript -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Liên kết đến file JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

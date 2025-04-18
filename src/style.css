@@ -1,0 +1,276 @@
+/* Biến CSS tùy chỉnh (giữ nguyên hoặc cập nhật nếu cần) */
+:root {
+  --text-color: #0e0d0d; /* Đổi màu text mặc định nếu cần cho nền mới */
+  --input-bg-color: #fff;
+  --input-text-color: #121111;
+  --button-bg-color: #7f8ff4;
+  --button-text-color: #fff;
+  --button-bg-hover-color: #7181f3;
+
+  --n: 8;
+  --grid-size: 400px; /* Kích thước của lưới puzzle */
+  --piece-size: calc(var(--grid-size) / var(--n));
+  --bg-image: url('./image/SVLEN.jpg');
+  --gap: 0px; /* Không có khoảng cách giữa các mảnh */
+
+  /* Các biến không còn dùng trực tiếp hoặc đã tích hợp */
+  /* --pieces-area-height: 300px; */
+}
+
+/* Reset cơ bản */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  /* --- MÀU NỀN TƯƠI SÁNG --- */
+  /* Chọn một trong các tùy chọn sau hoặc tự tạo */
+
+  /* Tùy chọn 1: Gradient nhẹ nhàng */
+   background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
+
+  /* Tùy chọn 2: Màu xanh da trời nhạt */
+  /*background-color: #e0f7fa;
+
+  /* Tùy chọn 3: Màu vàng kem */
+  /* background-color: #fffde7; */
+
+  font: 1rem "PT Sans", sans-serif;
+  color: var(--text-color); /* Đảm bảo màu text tương phản tốt */
+}
+
+
+/* Các style cũ giữ nguyên */
+a { color: inherit; text-decoration: none; transition: color 0.2s ease-in; }
+a:hover { color: var(--button-bg-color); }
+
+.game-instructions {
+  text-align: center;
+  width: 100%; /* Đảm bảo thẻ p chiếm đủ rộng để căn giữa hiệu quả */
+  max-width: 500px; /* Giới hạn chiều rộng tối đa nếu muốn */
+  margin-left: auto; /* Căn giữa block element nếu cần */
+  margin-right: auto;
+  margin-bottom: 5px; /* Giữ khoảng cách dưới */
+  line-height: 1.5; /* Tăng khoảng cách dòng nếu muốn */
+  color: var(--text-color); /* Kế thừa hoặc đặt màu cụ thể */
+}
+/* Container chính */
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 15px; /* Giảm padding trên dưới một chút */
+  width: 100%;
+}
+
+/* Form và Input */
+.form { margin-bottom: 5px; }
+.form__field {
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+  background: var(--input-bg-color);
+  color: var(--input-text-color);
+  font: inherit;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+  border: 0;
+  outline: 0;
+  padding: 20px 15px;
+  border-radius: 15px;
+}
+
+/* --- VÙNG CHỨA TRÒ CHƠI CHÍNH --- */
+.game-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start; /* Căn đỉnh */
+  gap: 20px; /* Khoảng cách giữa vùng mảnh và lưới */
+  width: 100%;
+  max-width: 1000px; /* Giới hạn chiều rộng tối đa */
+  margin-top: 20px;
+}
+
+/* --- LƯỚI PUZZLE --- */
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--n), var(--piece-size));
+  grid-template-rows: repeat(var(--n), var(--piece-size));
+  gap: var(--gap);
+  width: var(--grid-size);
+  height: var(--grid-size);
+
+  /* --- THAY ĐỔI KHUNG ẢNH Ở ĐÂY --- */
+  border: 1px solid #ccc; /* Giữ lại 1 border mỏng cho chính lưới nếu muốn */
+  position: relative; /* Bắt buộc cho ::before */
+  z-index: 1; /* Đảm bảo lưới và mảnh ghép nổi lên trên ::before */
+  background-color: #e0e0e0;
+  flex-shrink: 0;
+  /* Thêm bóng đổ cho toàn bộ (lưới + khung) */
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  /* -------------------------------------- */
+}
+
+/* Tạo lớp khung giả bằng ::before */
+.puzzle-grid::before {
+  content: '';
+  position: absolute;
+  /* Đặt vị trí và kích thước để bao quanh grid */
+  /* Giá trị âm bằng độ dày mong muốn của khung */
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+
+  /* Style cho khung giả */
+  border: 15px solid #A0522D; /* Màu Sienna */
+  border-radius: 5px;
+  z-index: 0; /* Nằm dưới grid content */
+
+  /* Bóng đổ bên trong khung giả */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+
+  /* Ngăn không cho ::before bắt sự kiện chuột */
+  pointer-events: none;
+}
+
+
+/* --- Ô TRỐNG (DROPZONE) --- */
+.puzzle-dropzone {
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(170, 170, 170, 0.7);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  position: relative;
+  z-index: 0;
+}
+
+.puzzle-dropzone.drag-over {
+  background-color: rgba(127, 143, 244, 0.3);
+  border-style: solid;
+}
+.pieces-container.side-container {
+  position: relative;
+  width: 150px;
+  height: calc(var(--grid-size) + 2px); /* Cao bằng lưới + border */
+  /* ---- Giữ yêu cầu nền trong suốt ---- */
+  background-color: transparent;
+  border: none;
+  /* ----------------------------------- */
+  border-radius: 5px; /* Giữ hoặc bỏ tùy ý */
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --- MẢNH GHÉP --- */
+.puzzle-piece {
+  width: var(--piece-size);
+  height: var(--piece-size);
+  background-image: var(--bg-image);
+  background-size: var(--grid-size) var(--grid-size);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, border-color 0.3s ease-in-out;
+  user-select: none;
+  /* XÓA position: absolute; mặc định */
+  /* position và z-index sẽ được đặt bởi JS ban đầu */
+}
+
+.puzzle-piece.dragging {
+    cursor: grabbing;
+    opacity: 0.7;
+    transform: scale(1.1); /* Cho phép xoay khi kéo nếu có */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000 !important;
+}
+
+/* Mảnh đã đặt */
+.puzzle-piece.placed {
+    position: static !important;
+    transform: none !important;
+    cursor: default;
+    opacity: 1;
+    box-shadow: none;
+    z-index: 1;
+}
+
+.puzzle-grid.puzzle-completed .puzzle-piece.placed {
+  border-color: transparent;
+}
+
+.puzzle-grid.puzzle-completed .puzzle-dropzone {
+    border: 0px dashed #aaa;
+    background-color: transparent;
+    border-color: transparent;
+    pointer-events: none; /* Ngăn tương tác */
+}
+
+/* --- RESPONSIVE CHO MÀN HÌNH NHỎ --- */
+@media (max-width: 768px) {
+  .game-area {
+    flex-direction: column; /* Xếp dọc: vùng mảnh trên, lưới giữa, vùng mảnh dưới */
+    align-items: center; /* Căn giữa */
+    max-width: 95%;
+    gap: 15px; /* Giảm khoảng cách */
+  }
+
+  /* Cả hai vùng mảnh sẽ có style giống nhau trên mobile */
+  .pieces-container.side-container {
+    width: 90%; /* Rộng hơn */
+    max-width: calc(var(--grid-size) + 50px); /* Giới hạn chiều rộng */
+    height: 150px; /* Chiều cao cố định nhỏ hơn */
+    order: 1; /* Đẩy cả hai vùng mảnh xuống dưới lưới (nếu muốn) */
+    /* Hoặc để mặc định, vùng trái ở trên, vùng phải ở dưới */
+    display: flex; /* Sắp xếp các mảnh bên trong */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start; /* Căn mảnh lên đầu khi wrap */
+    gap: 5px; /* Khoảng cách giữa các mảnh bên trong */
+  }
+
+   /* Bỏ position absolute cho mảnh trong vùng hỗn loạn trên mobile */
+   .pieces-container.side-container .puzzle-piece {
+        position: static !important; /* Bỏ absolute */
+        transform: none !important; /* Bỏ xoay */
+        margin: 0; /* Reset margin nếu có */
+        flex-shrink: 0; /* Ngăn mảnh bị co lại */
+   }
+
+   #puzzle-grid {
+       order: 0; /* Đảm bảo lưới ở giữa nếu vùng mảnh có order 1 */
+       margin-bottom: 0; /* Reset margin */
+   }
+
+   /* Tùy chỉnh vùng bên phải nếu muốn nó ở dưới cùng */
+   #pieces-container-right.side-container {
+      /* Có thể thêm style riêng nếu cần */
+   }
+
+   /* Có thể ẩn 1 trong 2 vùng trên mobile nếu quá chật */
+   /* #pieces-container-right { display: none; } */
+}
+
+/* Thêm CSS cho màn hình rất nhỏ nếu cần */
+@media (max-width: 480px) {
+    /* Giảm kích thước lưới và mảnh ghép */
+    :root {
+        --grid-size: 300px; /* Ví dụ: giảm kích thước lưới */
+    }
+     .pieces-container.side-container {
+         height: 120px; /* Giảm chiều cao vùng mảnh */
+     }
+}
