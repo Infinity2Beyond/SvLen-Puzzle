@@ -245,7 +245,7 @@ a:hover { color: var(--button-bg-color); }
     border: 0px dashed #aaa;
     background-color: transparent;
     border-color: transparent;
-    pointer-events: none; /* Ngăn tương tác */
+    //pointer-events: none; /* Ngăn tương tác */
 }
 
 
@@ -253,7 +253,7 @@ a:hover { color: var(--button-bg-color); }
 /* Media query cho điện thoại */
 @media (max-width: 768px) {
   :root {
-    --grid-size: 80vw; /* Lưới chiếm 80% chiều rộng trên điện thoại */
+    --grid-size: 75vw; /* Reduced from 80vw to ensure it fits */
     --piece-size: calc(var(--grid-size) / var(--n));
   }
 
@@ -262,6 +262,25 @@ a:hover { color: var(--button-bg-color); }
     align-items: center;
     gap: 15px;
     padding: 10px;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+
+  .puzzle-grid {
+    margin: 0;
+    width: var(--grid-size);
+    height: var(--grid-size);
+    max-width: 350px; /* Reduced from 400px */
+    box-sizing: border-box;
+  }
+
+  .puzzle-grid::before {
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-width: 8px;
   }
 
   .pieces-container.side-container {
@@ -276,12 +295,7 @@ a:hover { color: var(--button-bg-color); }
     justify-content: center;
     gap: 5px;
     padding: 10px;
-  }
-
-  .puzzle-grid {
-    margin: 0;
-    width: 100%;
-    max-width: 400px;
+    box-sizing: border-box;
   }
 
   .game-instructions {
@@ -314,7 +328,15 @@ a:hover { color: var(--button-bg-color); }
 /* Media query cho điện thoại rất nhỏ */
 @media (max-width: 300px) {
   :root {
-    --grid-size: 90vw;
+    --grid-size: 80vw; /* Further reduced for very small screens */
+  }
+
+  .puzzle-grid::before {
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-width: 6px;
   }
 
   .game-instructions {
