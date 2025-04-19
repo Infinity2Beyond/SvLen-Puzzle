@@ -8,13 +8,11 @@
   --button-bg-hover-color: #7181f3;
 
   --n: 8;
-  --grid-size: 400px; /* Kích thước của lưới puzzle */
+  --grid-size: 100px; /* Kích thước của lưới puzzle */
   --piece-size: calc(var(--grid-size) / var(--n));
   --bg-image: url('./image/SVLEN.jpg');
   --gap: 0px; /* Không có khoảng cách giữa các mảnh */
 
-  /* Các biến không còn dùng trực tiếp hoặc đã tích hợp */
-  /* --pieces-area-height: 300px; */
 }
 
 /* Reset cơ bản */
@@ -88,7 +86,6 @@ html, body {
 
 
 body {
-  /* --- MÀU NỀN TƯƠI SÁNG --- */
   background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
 
   font: 1rem "PT Sans", sans-serif;
@@ -196,7 +193,7 @@ a:hover { color: var(--button-bg-color); }
 }
 .pieces-container.side-container {
   position: relative;
-  width: 200px;
+  width: 100px;
   height: calc(var(--grid-size) + 2px); /* Cao bằng lưới + border */
   /* ---- Giữ yêu cầu nền trong suốt ---- */
   background-color: transparent;
@@ -266,7 +263,7 @@ a:hover { color: var(--button-bg-color); }
 
   .pieces-container.side-container {
     width: 90%; /* Chiếm 90% chiều rộng */
-    max-width: 200px; /* Giới hạn chiều rộng */
+    max-width: 100px; /* Giới hạn chiều rộng */
     height: auto; /* Chiều cao tự động */
     overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
   }

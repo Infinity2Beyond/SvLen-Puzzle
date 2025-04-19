@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageURL = './image/DHTT.jpg';
     const gridSizePx = 400;
 
+    if (window.innerWidth <= 600) {
+        gridSizePx = 100;
+    }
+
     // Lấy tham chiếu đến các màn hình
     const nameInputScreen = document.getElementById('name-input-screen');
     const gameScreen = document.getElementById('game-screen');
