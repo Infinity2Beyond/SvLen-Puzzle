@@ -15,12 +15,20 @@
      <meta property="og:image" content="./image/DHTT.jpg">
 </head>
 <body>
-    <div class="container">
-        <form class="form">
-            <input class="form__field" type="text" placeholder="Tên bạn là gì">
-        </form>
-        <p class="game-instructions">Gắp và thả các mảnh ghép...<br>Bạn biết trò này chơi như nào mà!</p>
 
+    <!-- Màn hình nhập tên -->
+    <div id="name-input-screen" class="screen">
+        <h1>Chào mừng đến với SVLEN Puzzle!</h1>
+        <form id="name-form">
+            <input type="text" id="player-name" placeholder="Nhập tên của bạn" required>
+            <button type="submit">Bắt đầu chơi</button>
+        </form>
+    </div>
+
+    <!-- Màn hình trò chơi (ẩn ban đầu) -->
+    <div id="game-screen" class="screen hidden">
+        <p id="welcome-message" class="welcome-message"></p>
+        <p class="game-instructions">Gắp và thả các mảnh ghép...<br>Bạn biết trò này chơi như nào mà!</p>
         <div class="game-area">
             <!-- Vùng chứa mảnh ghép bên TRÁI -->
             <div id="pieces-container-left" class="pieces-container side-container">
@@ -37,7 +45,7 @@
                 <!-- Các mảnh ghép sẽ được tạo bởi JavaScript -->
             </div>
         </div>
-
+        <p id="completion-message" class="completion-message hidden"></p>
     </div>
 
     <!-- Liên kết đến file JavaScript -->

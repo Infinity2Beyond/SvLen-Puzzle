@@ -29,25 +29,70 @@ html, body {
   box-sizing: inherit;
 }
 
+/* Style chung cho tất cả các màn hình */
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Để che phủ toàn bộ màn hình */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
+  z-index: 1000; /* Đảm bảo ở trên cùng */
+}
+
+/* Ẩn màn hình */
+.hidden {
+  display: none;
+}
+
+/* Style cho form nhập tên */
+#name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#player-name {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+/* Tối ưu hóa cho màn hình trò chơi */
+#game-screen {
+  position: static; /* Không fixed nữa */
+  width: auto;
+  height: auto;
+  background-color: transparent; /* Không nền */
+  z-index: auto;
+  padding: 20px;
+}
+
+.welcome-message {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.completion-message {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+
 body {
   /* --- MÀU NỀN TƯƠI SÁNG --- */
-  /* Chọn một trong các tùy chọn sau hoặc tự tạo */
-
-  /* Tùy chọn 1: Gradient nhẹ nhàng */
-   background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
-
-  /* Tùy chọn 2: Màu xanh da trời nhạt */
-  /*background-color: #e0f7fa;
-
-  /* Tùy chọn 3: Màu vàng kem */
-  /* background-color: #fffde7; */
+  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
 
   font: 1rem "PT Sans", sans-serif;
   color: var(--text-color); /* Đảm bảo màu text tương phản tốt */
 }
 
-
-/* Các style cũ giữ nguyên */
 a { color: inherit; text-decoration: none; transition: color 0.2s ease-in; }
 a:hover { color: var(--button-bg-color); }
 
@@ -71,21 +116,7 @@ a:hover { color: var(--button-bg-color); }
   width: 100%;
 }
 
-/* Form và Input */
-.form { margin-bottom: 5px; }
-.form__field {
-  text-align: center;
-  width: 100%;
-  max-width: 360px;
-  background: var(--input-bg-color);
-  color: var(--input-text-color);
-  font: inherit;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
-  border: 0;
-  outline: 0;
-  padding: 20px 15px;
-  border-radius: 15px;
-}
+
 
 /* --- VÙNG CHỨA TRÒ CHƠI CHÍNH --- */
 .game-area {
@@ -169,7 +200,7 @@ a:hover { color: var(--button-bg-color); }
   background-color: transparent;
   border: none;
   /* ----------------------------------- */
-  border-radius: 5px; /* Giữ hoặc bỏ tùy ý */
+  border-radius: 5px;
   padding: 10px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -219,95 +250,29 @@ a:hover { color: var(--button-bg-color); }
     pointer-events: none; /* Ngăn tương tác */
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) { /* Hoặc 800px nếu bạn muốn áp dụng sớm hơn */
-
-  /* -- Thay đổi kích thước lưới linh hoạt -- */
-  :root { /* Đặt trong :root bên trong media query hoặc trực tiếp cho #puzzle-grid */
-      /* Lưới chiếm 90% chiều rộng màn hình, nhưng không lớn hơn 400px */
-      --grid-width: 90vw;
-      /* Chiều cao tự tính lại dựa trên grid-width mới */
-      /* --grid-height: calc(var(--grid-width) / var(--n-cols) * var(--n-rows)); */
-      /* --piece-size: calc(var(--grid-width) / var(--n-cols)); */
-      /* Lưu ý: JS cũng cần biết về sự thay đổi này nếu nó set style inline */
+@media (max-width: 600px) {
+  :root {
+    --grid-size: 95vw; /* Lưới chiếm 95% chiều rộng trên điện thoại */
+    --piece-size: calc(var(--grid-size) / var(--n));
   }
-
-  #puzzle-grid {
-      /* Áp dụng kích thước mới (quan trọng nếu bạn đặt biến trong :root) */
-      width: var(--grid-width);
-      height: var(--grid-height); /* Chiều cao sẽ tự tính theo biến CSS */
-      max-width: 400px; /* Giới hạn kích thước tối đa của lưới */
-      margin-left: auto; /* Căn giữa nếu width < 100% */
-      margin-right: auto;
-      order: 0; /* Lưới ở trên */
-      margin-bottom: 15px; /* Khoảng cách với vùng mảnh bên dưới */
-  }
-  /* ------------------------------------------ */
 
   .game-area {
-    flex-direction: column;
-    align-items: center; /* Căn giữa các thành phần con (lưới, vùng mảnh) */
-    max-width: 100%; /* Chiếm toàn bộ chiều rộng container */
-    gap: 15px; /* Giảm khoảng cách dọc */
-    padding: 0 5px; /* Thêm chút padding ngang nếu cần */
-    box-sizing: border-box;
+    flex-direction: column; /* Chuyển sang bố cục cột */
+    align-items: center; /* Căn giữa các phần tử */
   }
 
-  /* -- Chỉ hiển thị MỘT vùng chứa mảnh -- */
-  #pieces-container-right {
-      display: none; /* Ẩn vùng bên phải */
+  .pieces-container.side-container {
+    width: 90%; /* Chiếm 90% chiều rộng */
+    max-width: 400px; /* Giới hạn chiều rộng */
+    height: auto; /* Chiều cao tự động */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
   }
 
-  #pieces-container-left.pieces-container.side-container {
-      /* Đổi tên class hoặc chỉ cần target ID nếu đã bỏ side-container */
-      order: 1; /* Đặt dưới lưới */
-      width: 100%; /* Chiếm gần hết chiều rộng */
-      max-width: calc(var(--grid-width) + 30px); /* Rộng bằng lưới + viền nếu muốn */
-      /* Chiều cao linh hoạt hơn */
-      min-height: 100px; /* Chiều cao tối thiểu */
-      max-height: 25vh; /* Chiều cao tối đa là 25% chiều cao màn hình */
-      height: auto; /* Bỏ chiều cao cố định */
-
-      /* Giữ lại các style flexbox để xếp mảnh */
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center; /* Căn giữa các mảnh */
-      align-content: flex-start; /* Các hàng mảnh bắt đầu từ trên */
-      gap: 5px; /* Khoảng cách giữa các mảnh */
-      overflow-y: auto; /* Vẫn cho phép cuộn nếu quá nhiều mảnh */
-      padding: 10px;
-      /* Có thể thêm border nhẹ để dễ nhìn */
-      /* border: 1px solid #ddd; */
-      background-color: rgba(255, 255, 255, 0.3); /* Nền mờ nhẹ */
-      border-radius: 5px;
+  .puzzle-grid {
+    margin-top: 20px; /* Thêm khoảng cách */
   }
-  /* --------------------------------------- */
 
-   /* Đảm bảo các mảnh trong container mobile không bị position absolute */
-   #pieces-container-left .puzzle-piece {
-        position: static !important;
-        transform: none !important;
-        margin: 0; /* Reset margin */
-        flex-shrink: 0;
-        /* Có thể giảm kích thước mảnh một chút trên mobile nếu cần, nhưng sẽ phức tạp */
-        /* width: calc(var(--piece-size) * 0.9); */
-        /* height: calc(var(--piece-size) * 0.9); */
-   }
-}
-
-/* Có thể thêm breakpoint nhỏ hơn nếu cần tinh chỉnh thêm */
-@media (max-width: 480px) {
-    :root {
-        /* Có thể giảm max-width của lưới hơn nữa */
-        /* --grid-width: 90vw; */
-        /* max-width: 340px; */ /* Ghi đè max-width cho màn hình rất nhỏ */
-    }
-     #puzzle-grid {
-         max-width: 320px; /* Ví dụ: giảm max-width */
-     }
-
-    #pieces-container-left.pieces-container.side-container {
-        max-height: 20vh; /* Giảm chiều cao tối đa vùng mảnh */
-        min-height: 80px;
-    }
+  .game-instructions {
+    width: 90%;
+  }
 }

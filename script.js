@@ -1,15 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const n = 4; // --- CẬP NHẬT: Đặt lại n = 8 như trong CSS ---
+    const n = 5; 
     const imageURL = './image/DHTT.jpg';
     const gridSizePx = 400;
 
+    // Lấy tham chiếu đến các màn hình
+    const nameInputScreen = document.getElementById('name-input-screen');
+    const gameScreen = document.getElementById('game-screen');
+
+    // Lấy tham chiếu đến các phần tử trong form nhập tên
+    const nameForm = document.getElementById('name-form');
+    const playerNameInput = document.getElementById('player-name');
+
+    // Lấy tham chiếu đến các phần tử hiển thị tên
+    const welcomeMessage = document.getElementById('welcome-message');
+    const completionMessage = document.getElementById('completion-message');
+
     const puzzleGrid = document.getElementById('puzzle-grid');
-    // --- THAY ĐỔI: Lấy hai container mới ---
     const piecesContainerLeft = document.getElementById('pieces-container-left');
     const piecesContainerRight = document.getElementById('pieces-container-right');
-    // const piecesContainer = document.getElementById('pieces-container'); // Dòng này không cần nữa
-    // ---------------------------------------
     const root = document.documentElement;
+
+
 
     // --- Thiết lập biến CSS ---
     root.style.setProperty('--n', n);
@@ -17,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pieceSizePx = gridSizePx / n;
     root.style.setProperty('--piece-size', `${pieceSizePx}px`);
     root.style.setProperty('--bg-image', `url('${imageURL}')`);
-    // Biến --pieces-area-height không còn dùng trực tiếp trong JS nữa
 
     let pieces = []; // Mảng chứa tất cả các phần tử mảnh ghép
     let draggedPiece = null;
     let isCompleted = false; // Cờ kiểm tra hoàn thành
+    let playerName = ''; // Biến lưu tên người chơi
 
     // --- Hàm xáo trộn mảng (Fisher-Yates Shuffle) ---
     function shuffleArray(array) {
@@ -34,26 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Tạo Lưới Ô Trống và Mảnh Ghép ---
     function createPuzzle() {
         puzzleGrid.innerHTML = '';
-        // --- THAY ĐỔI: Xóa cả hai container bên ---
         piecesContainerLeft.innerHTML = '';
         piecesContainerRight.innerHTML = '';
-        // --------------------------------------
         pieces = []; // Reset mảng mảnh ghép
         isCompleted = false; // Reset trạng thái hoàn thành
         puzzleGrid.classList.remove('puzzle-completed'); // Xóa class hoàn thành nếu có
 
         // Lấy kích thước của một vùng chứa bên (giả sử chúng giống nhau)
-        // Chạy sau khi CSS đã áp dụng để có kích thước đúng
         let sideContainerWidth = 150; // Giá trị dự phòng từ CSS
         let sideContainerHeight = gridSizePx; // Giá trị dự phòng từ CSS
         const padding = 10; // Lấy từ padding trong CSS của .side-container
 
-        // Kiểm tra xem phần tử có hiển thị và có kích thước không
         if (piecesContainerLeft.offsetParent !== null) {
             sideContainerWidth = piecesContainerLeft.offsetWidth - (padding * 2); // Trừ padding trái/phải
             sideContainerHeight = piecesContainerLeft.offsetHeight - (padding * 2); // Trừ padding trên/dưới
         }
-
 
         // --- Tạo ô trống và mảnh ghép (Vòng lặp không đổi) ---
         for (let row = 0; row < n; row++) {
@@ -90,13 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- PHÂN PHỐI MẢNH GHÉP VÀO HAI BÊN ---
-        // Xáo trộn mảng pieces trước khi phân phối
         shuffleArray(pieces);
-
 
         pieces.forEach((piece, index) => {
             // Tính toán vị trí ngẫu nhiên bên trong vùng chứa bên
-            // Đảm bảo không đặt mảnh tràn ra ngoài vùng padding
             const maxLeft = Math.max(0, sideContainerWidth - pieceSizePx);
             const maxTop = Math.max(0, sideContainerHeight - pieceSizePx);
 
@@ -120,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
 
     // --- Trình nghe sự kiện cho Mảnh Ghép (addPieceListeners) ---
     function addPieceListeners(piece) {
@@ -147,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
             draggedPiece = null;
         });
     }
-
 
     // --- Trình nghe sự kiện cho Ô Trống (addDropzoneListeners) ---
     function addDropzoneListeners(dropzone) {
@@ -195,6 +196,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Xử lý sự kiện submit form nhập tên ---
+    nameForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Ngăn chặn gửi form mặc định
+        playerName = playerNameInput.value.trim(); // Lấy tên người chơi
+
+        if (playerName === '') {
+            alert('Vui lòng nhập tên của bạn!');
+            return;
+        }
+
+        // Hiển thị lời chào mừng trên màn hình trò chơi
+        welcomeMessage.textContent = `Chào mừng, ${playerName}!`;
+        completionMessage.textContent = `Chúc mừng, ${playerName}! Bạn đã hoàn thành trò chơi!`;
+        // Ẩn màn hình nhập tên và hiển thị màn hình trò chơi
+        nameInputScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+        // Hiển thị con trỏ chuột trên game screen
+        gameScreen.style.cursor = 'auto';
+
+        // Khởi tạo Puzzle
+        initializePuzzle();
+    });
+
     // --- Kiểm tra hoàn thành ---
     function checkCompletion() {
         // Nếu đã hoàn thành rồi thì không cần kiểm tra lại
@@ -203,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const placedPieces = puzzleGrid.querySelectorAll('.puzzle-piece.placed').length;
-        console.log("Placed pieces:", placedPieces); // Debug
 
         if (placedPieces === n * n) {
             isCompleted = true; // Đặt cờ đã hoàn thành
@@ -217,21 +240,14 @@ document.addEventListener('DOMContentLoaded', () => {
                      p.style.cursor = 'default';
                  }
             });
-
-            // Thông báo sau một khoảng trễ nhỏ để xem hiệu ứng
-            setTimeout(() => {
-                 alert('Chúc mừng! Bạn đã hoàn thành!');
-            }, 350); // Đợi 350ms
+            
+            completionMessage.classList.remove('hidden'); // SHOW MESSAGE
         }
     }
-
     // --- Khởi tạo Puzzle ---
     // Đóng gói vào hàm để dễ gọi lại (ví dụ: nút chơi lại)
     function initializePuzzle() {
          createPuzzle();
     }
-
-    // Gọi hàm khởi tạo ban đầu
-    initializePuzzle();
 
 }); // Kết thúc DOMContentLoaded
