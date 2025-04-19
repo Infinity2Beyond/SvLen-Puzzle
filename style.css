@@ -262,8 +262,8 @@ a:hover { color: var(--button-bg-color); }
   }
 
   .pieces-container.side-container {
-    width: 90%; /* Chiếm 90% chiều rộng */
-    max-width: 400px; /* Giới hạn chiều rộng */
+    width: 60%; /* Chiếm 90% chiều rộng */
+    max-width: 200px; /* Giới hạn chiều rộng */
     height: auto; /* Chiều cao tự động */
     overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
   }
