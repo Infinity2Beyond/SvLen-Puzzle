@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageURL = './image/DHTT.jpg';
     const gridSizePx = 400;
 
-    if (window.innerWidth <= 600) {
-        gridSizePx = 100;
+    if (window.innerWidth <= 300) {
+        gridSizePx = 50;
     }
 
     // Lấy tham chiếu đến các màn hình
