@@ -196,7 +196,7 @@ a:hover { color: var(--button-bg-color); }
 }
 .pieces-container.side-container {
   position: relative;
-  width: 250px;
+  width: 200px;
   height: calc(var(--grid-size) + 2px); /* Cao bằng lưới + border */
   /* ---- Giữ yêu cầu nền trong suốt ---- */
   background-color: transparent;
@@ -266,7 +266,7 @@ a:hover { color: var(--button-bg-color); }
 
   .pieces-container.side-container {
     width: 90%; /* Chiếm 90% chiều rộng */
-    max-width: 400px; /* Giới hạn chiều rộng */
+    max-width: 200px; /* Giới hạn chiều rộng */
     height: auto; /* Chiều cao tự động */
     overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
   }
