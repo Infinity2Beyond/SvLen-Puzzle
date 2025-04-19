@@ -252,3 +252,29 @@ a:hover { color: var(--button-bg-color); }
     pointer-events: none; /* Ngăn tương tác */
 }
 
+/* Media query cho điện thoại */
+@media (max-width: 200px) {
+  :root {
+    --grid-size: 95vw; /* Lưới chiếm 95% chiều rộng trên điện thoại */
+    --piece-size: calc(var(--grid-size) / var(--n));
+  }
+
+  .game-area {
+    flex-direction: column; /* Chuyển sang bố cục cột */
+    align-items: center; /* Căn giữa các phần tử */
+  }
+
+  .pieces-container.side-container {
+    width: 90%; /* Chiếm 90% chiều rộng */
+    max-width: 400px; /* Giới hạn chiều rộng */
+    height: auto; /* Chiều cao tự động */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
+  }
+
+  .puzzle-grid {
+    margin-top: 20px; /* Thêm khoảng cách */
+  }
+
+  .game-instructions {
+    width: 90%;
+  }
