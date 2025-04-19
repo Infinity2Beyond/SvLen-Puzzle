@@ -250,9 +250,9 @@ a:hover { color: var(--button-bg-color); }
 }
 
 /* Media query cho điện thoại */
-@media (max-width: 200px) {
+@media (max-width: 600px) {
   :root {
-    --grid-size: 95vw; /* Lưới chiếm 95% chiều rộng trên điện thoại */
+    --grid-size: 50vw; /* Lưới chiếm 95% chiều rộng trên điện thoại */
     --piece-size: calc(var(--grid-size) / var(--n));
   }
 
@@ -263,7 +263,7 @@ a:hover { color: var(--button-bg-color); }
 
   .pieces-container.side-container {
     width: 90%; /* Chiếm 90% chiều rộng */
-    max-width: 100px; /* Giới hạn chiều rộng */
+    max-width: 150px; /* Giới hạn chiều rộng */
     height: auto; /* Chiều cao tự động */
     overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
   }
