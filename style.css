@@ -7,10 +7,10 @@
   --button-text-color: #fff;
   --button-bg-hover-color: #7181f3;
 
-  --n: 8;
+  --n: 4;
   --grid-size: 100px; /* Kích thước của lưới puzzle */
   --piece-size: calc(var(--grid-size) / var(--n));
-  --bg-image: url('./image/SVLEN.jpg');
+  --bg-image: url('./image/DHTT.jpg');
   --gap: 0px; /* Không có khoảng cách giữa các mảnh */
 
 }
@@ -193,7 +193,7 @@ a:hover { color: var(--button-bg-color); }
 }
 .pieces-container.side-container {
   position: relative;
-  width: 100px;
+  width: 150px;
   height: calc(var(--grid-size) + 2px); /* Cao bằng lưới + border */
   /* ---- Giữ yêu cầu nền trong suốt ---- */
   background-color: transparent;
@@ -257,7 +257,7 @@ a:hover { color: var(--button-bg-color); }
   }
 
   .game-area {
-    flex-direction: row; /* Chuyển sang bố cục cột */
+    flex-direction: column; /* Chuyển sang bố cục cột */
     align-items: center; /* Căn giữa các phần tử */
   }
 
