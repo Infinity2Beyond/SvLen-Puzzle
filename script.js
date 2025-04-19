@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const n = 4; 
+    const n = 2; 
     const imageURL = './image/DHTT.jpg';
     const gridSizePx = 400;
 
-    if (window.innerWidth <= 300) {
-        gridSizePx = 50;
-    }
+    // if (window.innerWidth <= 300) {
+    //     gridSizePx = 50;
+    // }
 
     // Lấy tham chiếu đến các màn hình
     const nameInputScreen = document.getElementById('name-input-screen');
@@ -235,6 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (placedPieces === n * n) {
             isCompleted = true; // Đặt cờ đã hoàn thành
             puzzleGrid.classList.add('puzzle-completed'); // Thêm class để CSS ẩn viền/dropzone
+
+            // Hide both pieces containers
+            piecesContainerLeft.style.display = 'none';
+            piecesContainerRight.style.display = 'none';
 
             // Vô hiệu hóa kéo/thả các mảnh còn lại (nếu có lỗi logic nào đó)
             pieces.forEach(p => {

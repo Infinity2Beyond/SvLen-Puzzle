@@ -33,13 +33,13 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed; /* Để che phủ toàn bộ màn hình */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
-  z-index: 1000; /* Đảm bảo ở trên cùng */
+  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+  z-index: 1000;
 }
 
 /* Ẩn màn hình */
@@ -86,10 +86,9 @@ html, body {
 
 
 body {
-  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); */
-
+  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
   font: 1rem "PT Sans", sans-serif;
-  color: var(--text-color); /* Đảm bảo màu text tương phản tốt */
+  color: var(--text-color);
 }
 
 a { color: inherit; text-decoration: none; transition: color 0.2s ease-in; }
@@ -249,30 +248,81 @@ a:hover { color: var(--button-bg-color); }
     pointer-events: none; /* Ngăn tương tác */
 }
 
+
+
 /* Media query cho điện thoại */
-@media (max-width: 300px) {
+@media (max-width: 768px) {
   :root {
-    --grid-size: 60vw; /* Lưới chiếm 50% chiều rộng trên điện thoại */
+    --grid-size: 80vw; /* Lưới chiếm 80% chiều rộng trên điện thoại */
     --piece-size: calc(var(--grid-size) / var(--n));
   }
 
   .game-area {
-    flex-direction: column; /* Chuyển sang bố cục cột */
-    align-items: center; /* Căn giữa các phần tử */
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
   }
 
   .pieces-container.side-container {
-    width: 90%; /* Chiếm 90% chiều rộng */
-    max-width: 50px; /* Giới hạn chiều rộng */
-    height: auto; /* Chiều cao tự động */
-    overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 100px;
+    max-height: 200px;
+    overflow-x: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px;
   }
 
   .puzzle-grid {
-    margin-top: 20px; /* Thêm khoảng cách */
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
   }
 
   .game-instructions {
     width: 90%;
+    font-size: 0.9rem;
+    margin: 10px auto;
+  }
+
+  .welcome-message {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+
+  .completion-message {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+
+  #player-name {
+    width: 80%;
+    max-width: 300px;
+    font-size: 1rem;
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
+
+/* Media query cho điện thoại rất nhỏ */
+@media (max-width: 300px) {
+  :root {
+    --grid-size: 90vw;
+  }
+
+  .game-instructions {
+    font-size: 0.8rem;
+  }
+
+  .welcome-message,
+  .completion-message {
+    font-size: 1rem;
   }
 }
