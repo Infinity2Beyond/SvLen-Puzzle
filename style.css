@@ -71,7 +71,9 @@ html, body {
   z-index: auto;
   padding: 20px;
 }
-
+.h1 {
+  text-align: center;
+}
 .welcome-message {
   font-size: 1.5em;
   margin-bottom: 20px;
