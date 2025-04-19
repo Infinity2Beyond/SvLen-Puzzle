@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const n = 4; 
     const imageURL = './image/DHTT.jpg';
-    const gridSizePx = 400;
+    let gridSizePx = 400;
 
-    // if (window.innerWidth <= 300) {
-    //     gridSizePx = 50;
-    // }
+    // Adjust grid size for mobile
+    if (window.innerWidth <= 768) {
+        gridSizePx = Math.min(300, window.innerWidth * 0.7);
+    }
 
     // Lấy tham chiếu đến các màn hình
     const nameInputScreen = document.getElementById('name-input-screen');
@@ -56,9 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
         puzzleGrid.classList.remove('puzzle-completed'); // Xóa class hoàn thành nếu có
 
         // Lấy kích thước của một vùng chứa bên (giả sử chúng giống nhau)
-        let sideContainerWidth = 150; // Giá trị dự phòng từ CSS
-        let sideContainerHeight = gridSizePx; // Giá trị dự phòng từ CSS
-        const padding = 10; // Lấy từ padding trong CSS của .side-container
+        let sideContainerWidth = Math.min(300, window.innerWidth * 0.9); // Giới hạn chiều rộng tối đa
+        let sideContainerHeight = gridSizePx * 0.4; // Giảm chiều cao cho mobile
+        const padding = 5; // Giảm padding cho mobile
 
         if (piecesContainerLeft.offsetParent !== null) {
             sideContainerWidth = piecesContainerLeft.offsetWidth - (padding * 2); // Trừ padding trái/phải
