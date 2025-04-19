@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const n = 5; 
+    const n = 4; 
     const imageURL = './image/DHTT.jpg';
     const gridSizePx = 400;
 
