@@ -10,7 +10,7 @@
   --n: 4;
   --grid-size: 100px; /* Kích thước của lưới puzzle */
   --piece-size: calc(var(--grid-size) / var(--n));
-  --bg-image: url('./image/key.jpg');
+  --bg-image: url('./image/key_final.jpg');
   --gap: 0px; /* Không có khoảng cách giữa các mảnh */
 
 }

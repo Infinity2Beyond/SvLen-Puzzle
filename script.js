@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const n = 4; 
-    const imageURL = './image/key.jpg';
+    const imageURL = './image/key_final.jpg';
     let gridSizePx = 400;
 
     // Adjust grid size for mobile
