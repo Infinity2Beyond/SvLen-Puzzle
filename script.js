@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const n = 4; 
-    const imageURL = './image/DHTT.jpg';
+    const imageURL = './image/key.jpg';
     let gridSizePx = 400;
 
     // Adjust grid size for mobile
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Hiển thị lời chào mừng trên màn hình trò chơi
         welcomeMessage.textContent = `Chào mừng, ${playerName}!`;
-        completionMessage.textContent = `Chúc mừng, ${playerName}! Bạn đã hoàn thành trò chơi!`;
+        completionMessage.textContent = `Chúc mừng, ${playerName}! Nhờ bạn, Lan và Ngạn có thể tìm được nhau rồi!`;
         // Ẩn màn hình nhập tên và hiển thị màn hình trò chơi
         nameInputScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
